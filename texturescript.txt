@@ -1,49 +1,49 @@
-1:  #for selected shaders create an AO node with 16 samples 4 max distance bright 0.8, 0.8, 0.8 and connect it's outValueR to Diffuse.  
-2:  #for all the selected maya software shaders, User must select these.  
-3:  #make a function to be run with singleAO       
-4:  def singleAO():  
-5:    #Import the maya cmds module to run maya commands in Python  
-6:    from maya import cmds  
-7:    #create a variable and assign it to all the software shaders of the selected shaders  
-8:    swareShaders = cmds.ls(type="lambert", selection=True)    
-9:    print swareShaders  
-10:    #create a variable and assign it to all the mia_material_x_passes of the selected shaders  
-11:    miaShaders = cmds.ls(type="mia_material_x_passes", selection=True)  
-12:    #for each software shader do the following  
-13:    for each in swareShaders:  
-14:      #make a fast occlusion node  
-15:      objectName = cmds.shadingNode("mib_fast_occlusion", asTexture=True )  
-16:      #set the samples/max dist./bright value as per NK docs  
-17:      cmds.setAttr(objectName + ".samples", 16)  
-18:      cmds.setAttr(objectName + ".max_distance", 4)  
-19:      cmds.setAttr(objectName + ".bright", 0.8, 0.8, 0.8, type="double3")  
-20:      cmds.connectAttr(objectName +".outValue.outValueR", each + ".diffuse", force=True)  
-21:    #for all the miaMaterial X Passes shaders do the following         
-22:    for mia in miaShaders:  
-23:      #Turns on AO if it is off, set max distance, dark and samples.  
-24:      if (mia + ".ao_on", 0):    
-25:        cmds.setAttr(mia + ".ao_on", 1)  
-26:      if (mia + ".ao_distance", not 4):     
-27:        cmds.setAttr(mia + ".ao_distance", 4)  
-28:      if (mia + ".ao_dark", not 0.0, 0.0, 0.0):  
-29:        cmds.setAttr(mia + ".ao_dark", 0.0, 0.0, 0.0)  
-30:      if (mia + ".ao_samples", not 16):  
-31:        cmds.setAttr(mia + ".ao_samples", 16)  
-32:      #Warns User if they have selected wrong type of shader.  
-33:      if not swareShaders or miaShaders:  
-34:        print "Sorry Please select correct Shadertype"  
-35:  #make a function to be Run with "allAO()"        
-36:  def allAO():  
-37:    #Import the maya cmds module to run maya commands in Python  
-38:    from maya import cmds  
-39:    #Make the sware and mia Shader variables for this function  
-40:    swareShaders = cmds.ls(type="lambert", selection=True)  
-41:    miaShaders = cmds.ls(type="mia_material_x_passes", selection=True)  
-42:    #make a variable for all the selected mia and software shaders    
-43:    allShaders = miaShaders and swareShaders  
-44:    #for all the selected mia/sware shaders do the following  
-45:    for both in allShaders:  
-46:      #run the function singleAO() on all the shaders.  
-47:      singleAO()  
-48:  #executes the allAO() function.       
-49:  allAO()        
+  #for selected shaders create an AO node with 16 samples 4 max distance bright 0.8, 0.8, 0.8 and connect it's outValueR to Diffuse.  
+  #for all the selected maya software shaders, User must select these.  
+  #make a function to be run with singleAO       
+  def singleAO():  
+    #Import the maya cmds module to run maya commands in Python  
+    from maya import cmds  
+    #create a variable and assign it to all the software shaders of the selected shaders  
+    swareShaders = cmds.ls(type="lambert", selection=True)    
+   print swareShaders  
+    #create a variable and assign it to all the mia_material_x_passes of the selected shaders  
+    miaShaders = cmds.ls(type="mia_material_x_passes", selection=True)  
+    #for each software shader do the following  
+    for each in swareShaders:  
+      #make a fast occlusion node  
+      objectName = cmds.shadingNode("mib_fast_occlusion", asTexture=True )  
+      #set the samples/max dist./bright value as per NK docs  
+      cmds.setAttr(objectName + ".samples", 16)  
+      cmds.setAttr(objectName + ".max_distance", 4)  
+      cmds.setAttr(objectName + ".bright", 0.8, 0.8, 0.8, type="double3")  
+      cmds.connectAttr(objectName +".outValue.outValueR", each + ".diffuse", force=True)  
+    #for all the miaMaterial X Passes shaders do the following         
+    for mia in miaShaders:  
+      #Turns on AO if it is off, set max distance, dark and samples.  
+      if (mia + ".ao_on", 0):    
+        cmds.setAttr(mia + ".ao_on", 1)  
+      if (mia + ".ao_distance", not 4):     
+        cmds.setAttr(mia + ".ao_distance", 4)  
+      if (mia + ".ao_dark", not 0.0, 0.0, 0.0):  
+        cmds.setAttr(mia + ".ao_dark", 0.0, 0.0, 0.0)  
+      if (mia + ".ao_samples", not 16):  
+        cmds.setAttr(mia + ".ao_samples", 16)  
+      #Warns User if they have selected wrong type of shader.  
+      if not swareShaders or miaShaders:  
+        print "Sorry Please select correct Shadertype"  
+  #make a function to be Run with "allAO()"        
+  def allAO():  
+    #Import the maya cmds module to run maya commands in Python  
+    from maya import cmds  
+    #Make the sware and mia Shader variables for this function  
+    swareShaders = cmds.ls(type="lambert", selection=True)  
+    miaShaders = cmds.ls(type="mia_material_x_passes", selection=True)  
+    #make a variable for all the selected mia and software shaders    
+    allShaders = miaShaders and swareShaders  
+    #for all the selected mia/sware shaders do the following  
+    for both in allShaders:  
+      #run the function singleAO() on all the shaders.  
+     singleAO()  
+  #executes the allAO() function.       
+  allAO()        
